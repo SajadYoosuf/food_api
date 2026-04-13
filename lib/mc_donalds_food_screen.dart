@@ -18,27 +18,38 @@ class _McDonaldsFoodScreenState extends State<McDonaldsFoodScreen> {
   Future getFoodFromApi() async {
     Logger logger = Logger();
     Dio dio = Dio();
-    Response response = await dio.get(
-      "https://mcdonald-s-products-api.p.rapidapi.com/us/products/200426",
-      options: Options(
-        headers: {
-          "Content-Type": "application/json",
-          "x-rapidapi-host": "mcdonald-s-products-api.p.rapidapi.com",
-          "x-rapidapi-key":
-              "fa1e134807msh7db3c185f348abbp166e6cjsn96c33a712066",
-        },
-      ),
-    );
-    if (response.statusCode == 200) {
-      logger.d("data from api response:${response.data}");
-      logger.d("headers from api response:${response.headers}");
-      logger.d("status message from api response:${response.statusMessage}");
-      logger.d("request options  from api response:${response.requestOptions}");
-      mcDonalds = McDonalds.fromJson(
-        JsonDecoder(response.data) as Map<String,dynamic>
+    try{
+      Response response = await dio.get(
+        "https://mcdonald-s-products-api.p.rapidapi.com/us/products/200426",
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "x-rapidapi-host": "mcdonald-s-products-api.p.rapidapi.com",
+            "x-rapidapi-key":
+            "fa1e134807msh7db3c185f348abbp166e6cjsn96c33a712066",
+          },
+        ),
       );
-      isLoading=false;
+      if (response.statusCode == 200) {
+        logger.d("data from api response:${response.data}");
+        logger.d("headers from api response:${response.headers}");
+        logger.d("status message from api response:${response.statusMessage}");
+        logger.d("request options  from api response:${response.requestOptions}");
+
+
+
+        mcDonalds = McDonalds.fromJson(
+            response.data
+        );
+        setState(() {
+          isLoading=false;
+
+        });
+      }
+    }catch(e){
+      logger.d("from api catching $e");
     }
+
   }
 
   @override

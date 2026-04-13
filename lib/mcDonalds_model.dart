@@ -35,19 +35,22 @@ class McDonalds {
     required this.nutrientFacts,
   });
 
-  factory McDonalds.fromJson(Map<String, dynamic> json) => McDonalds(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-    marketingName: json["marketing_name"],
-    shortName: json["short_name"],
-    menuItemNo: json["menu_item_no"],
-    type: json["type"],
-    keywords: List<String>.from(json["keywords"].map((x) => x)),
-    ingredients: json["ingredients"],
-    additionalIngredientStatement: json["additional_ingredient_statement"],
-    nutrientFacts: List<NutrientFact>.from(json["nutrient_facts"].map((x) => NutrientFact.fromJson(x))),
-  );
+  factory McDonalds.fromJson(Map<String, dynamic> json) {
+    print("from api oops calling $json");
+    return McDonalds(
+      id: json["id"],
+      name: json["name"],
+      description: json["description"],
+      marketingName: json["marketing_name"],
+      shortName: json["short_name"],
+      menuItemNo: json["menu_item_no"],
+      type: json["type"],
+      keywords: List<String>.from(json["keywords"].map((x) => x)),
+      ingredients: json["ingredients"],
+      additionalIngredientStatement: json["additional_ingredient_statement"],
+      nutrientFacts: List<NutrientFact>.from(json["nutrient_facts"].map((x) => NutrientFact.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
